@@ -133,24 +133,24 @@ def execute_instruction(instruction,targets):
         imm = targets[1]
         rs1 = targets[2]
         if func3 == '000':
-            index = rs1 + imm
-            value = memory[index]
+            index = int(registers[rs1]) + int(imm)
+            value = memory[str(index)]
             try:
                 registers[rd] = value[0:8]
                 sucess = True
             except:
                 registers[rd] = 0
         elif func3 == '001':
-            index = rs1 + imm
-            value = memory[index]
+            index = int(registers[rs1]) + int(imm)
+            value = memory[str(index)]
             try:
                 registers[rd] = value[0:16]
                 sucess = True
             except:
                 registers[rd] = 0
         elif func3 == '010':
-            index = rs1 + imm
-            value = memory[index]
+            index = int(registers[rs1]) + int(imm)
+            value = memory[str(index)]
             try:
                 registers[rd] = value[0:32]
                 sucess = True
@@ -179,7 +179,7 @@ def execute_instruction(instruction,targets):
         func7 = str(instruction[2])
         rs2 = targets[0]
         imm = targets[1]
-        rs1 = targets[2]
+        rs1 = registers[targets[2]]
         if func3 == '000':
             index = int(rs1) + int(imm)
             try:
