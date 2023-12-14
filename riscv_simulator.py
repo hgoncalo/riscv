@@ -128,12 +128,13 @@ def execute_instruction(instruction,targets):
         print(f"Placed an operation with '{registers[rs1]}' and '{imm}' into register[{rd}].")
 
     elif opcode == '0000011': #I-TYPE LOAD
+        #TODO : Update RS1,RD,IMM indexs according to S-TYPE instruction
         func7 = str(instruction[2])
         rd = targets[0]
         imm = targets[1]
-        rs1 = targets[2]
+        rs1 = registers[targets[2]]
         if func3 == '000':
-            index = int(registers[rs1]) + int(imm)
+            index = int(rs1) + int(imm)
             value = memory[str(index)]
             try:
                 registers[rd] = value[0:8]
@@ -141,7 +142,7 @@ def execute_instruction(instruction,targets):
             except:
                 registers[rd] = 0
         elif func3 == '001':
-            index = int(registers[rs1]) + int(imm)
+            index = int(rs1) + int(imm)
             value = memory[str(index)]
             try:
                 registers[rd] = value[0:16]
@@ -149,7 +150,7 @@ def execute_instruction(instruction,targets):
             except:
                 registers[rd] = 0
         elif func3 == '010':
-            index = int(registers[rs1]) + int(imm)
+            index = int(rs1) + int(imm)
             value = memory[str(index)]
             try:
                 registers[rd] = value[0:32]
@@ -177,33 +178,33 @@ def execute_instruction(instruction,targets):
 
     elif opcode == '0100011': #S-TYPE
         func7 = str(instruction[2])
-        rs2 = targets[0]
+        rs2 = registers[targets[2]]
         imm = targets[1]
-        rs1 = registers[targets[2]]
+        rs1 = registers[targets[0]]
         if func3 == '000':
-            index = int(rs1) + int(imm)
+            index = int(rs2) + int(imm)
             try:
-                memory[index] = rs2[0:8]
+                memory[str(index)] = str(rs1)[0:8]
                 sucess = True
             except:
                 memory[index] = 0
         elif func3 == '001':
-            index = int(rs1) + int(imm)
+            index = int(rs2) + int(imm)
             try:
-                memory[index] = rs2[0:8]
+                memory[str(index)] = str(rs1)[0:8]
                 sucess = True
             except:
                 memory[index] = 0
         elif func3 == '010':
-            index = int(registers[rs1]) + int(imm)
+            index = int(rs2) + int(imm)
             try:
-                memory[str(index)] = rs2[0:8]
+                memory[str(index)] = str(rs1)[0:8]
                 sucess = True
             except:
                 memory[index].append(0)
         if sucess == True:
             print(f"Just did an {opcode} type operation")
-            print(f"Added '{rs2}' into memory[{index}].")
+            print(f"Added '{rs1}' into memory[{index}].")
         else:
             print(f"Just did an {opcode} type operation")
             print(f"Something went wrong , so memory[{index}] was set to 0")
