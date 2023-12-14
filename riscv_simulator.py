@@ -77,6 +77,7 @@ def execute_instruction(instruction,targets):
         pass
     elif opcode == '1100011': #B-TYPE
         pass
+#check load and store (how it works)
 
 
 ###### MAIN METHOD ######
